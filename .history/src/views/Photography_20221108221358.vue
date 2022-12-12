@@ -1,0 +1,53 @@
+<template>
+    <div class="photography">
+        <a-row class="photography-row">
+            <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
+            <a-col :xs="20" :sm="16" :md="16" :lg="14" :xl="14">
+                <div class="photography-row-div">
+                    <a-card hoverable class="photography-row-div-card">
+                        <template #cover>
+                            <a-image class="photography-row-div-card-image"
+                                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                        </template>
+                        <!-- <template #actions>
+                            <setting-outlined key="setting" />
+                            <edit-outlined key="edit" />
+                            <ellipsis-outlined key="ellipsis" />
+                        </template> -->
+                        <a-card-meta title="站长" description="站长的摄影日记~">
+                            <template #avatar>
+                                <a-avatar src="https://joeschmoe.io/api/v1/random" />
+                            </template>
+                        </a-card-meta>
+                    </a-card>
+                </div>
+            </a-col>
+            <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
+        </a-row>
+    </div>
+</template>
+<script lang="ts">
+// import { SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons-vue';
+import { defineComponent } from "@vue/runtime-core";
+export default defineComponent({
+    name: "PhotographyImage",
+    setup() {
+        return {}
+    },
+    components: {
+        // SettingOutlined,
+        // EditOutlined,
+        // EllipsisOutlined,
+    },
+})
+</script>
+<style lang="stylus" scoped>
+.photography
+    min-height 500px
+    .photography-row-div
+        text-align left
+        .photography-row-div-card
+            min-width 300px
+            .photography-row-div .ant-card-cover .ant-image-img
+                max-height 300px!important
+</style>
