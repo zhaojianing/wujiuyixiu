@@ -19,7 +19,7 @@
                                                     <a-select v-model:value="modelRef.year" placeholder="年">
                                                         <a-select-option :value="item" v-for="item in year" :key="item">
                                                             {{
-                                                            item
+                                                                    item
                                                             }}
                                                         </a-select-option>
                                                     </a-select>
@@ -39,7 +39,7 @@
                                                     <a-select v-model:value="modelRef.day" placeholder="日">
                                                         <a-select-option :value="item" v-for="item in day" :key="item">
                                                             {{
-                                                            item
+                                                                    item
                                                             }}
                                                         </a-select-option>
                                                     </a-select>
@@ -50,7 +50,7 @@
                                                     <a-select v-model:value="modelRef.hour" placeholder="时">
                                                         <a-select-option :value="item" v-for="item in hour" :key="item">
                                                             {{
-                                                            item
+                                                                    item
                                                             }}
                                                         </a-select-option>
                                                     </a-select>
@@ -74,7 +74,7 @@
                                                         <a-select v-model:value="xuankongRef.jiuyun" placeholder="几运">
                                                             <a-select-option :value="item"
                                                                 v-for="item in xuankongjiuyun" :key="item">{{
-                                                                item
+                                                                        item
                                                                 }}
                                                             </a-select-option>
                                                         </a-select>
@@ -108,9 +108,9 @@
                                 <div class="xuankong-save" v-if="isSave">
                                     <a-form :model="paipanFormState" v-bind="layout" name="nest-messages">
                                         <a-form-item label="坐向">
-                                            <span>{{xuankongRef.jiuyun}}</span>
-                                            <span>{{xuankongRef.zuoshan}}</span>
-                                            <span>({{xuankongRef.xiati}})</span>
+                                            <span>{{ xuankongRef.jiuyun }}</span>
+                                            <span>{{ xuankongRef.zuoshan }}</span>
+                                            <span>({{ xuankongRef.xiati }})</span>
                                         </a-form-item>
                                         <a-form-item :name="['user', 'name']" label="标题">
                                             <a-input placeholder="此卦所测" v-model:value="paipanFormState.user.title" />
@@ -126,7 +126,7 @@
                                 </div>
                                 <!-- 展示信息 -->
                             </a-col>
-                            <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxxl="8">
+                            <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxxl="8" v-show="isShow.isShowZiBai">
                                 <div class="xuankong-jiugong">
                                     <div class="gridBox">
                                         <div class="cellLi" v-for="zibai in zibaifeixing" :key="zibai.fei">
@@ -136,13 +136,24 @@
                                     </div>
                                 </div>
                             </a-col>
-                            <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxxl="8">
+                            <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxxl="8"
+                                v-show="isShow.isShowXuanKong">
                                 <div class="xuankong-jiugong">
                                     <div class="gridBox">
                                         <div class="cellLi" v-for="jiugong in xuankongjiugong" :key="jiugong.fei">
                                             <p>{{ jiugong.shanxing }} {{ jiugong.xiangxing }}</p> <br>
                                             <p>{{ jiugong.yunpan }}</p>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="xuankong-jibenziliao">
+                                    <div class="jibenziliao">
+                                        <h3> <b> ( {{xuankongRef.zuoshan}} {{xuankongRef.xiati}}) 基础信息：</b></h3>
+                                        <hr>
+                                        <p>1: 地运{{ gengduo.diyun }} 年</p>
+                                        <p v-for="(item, index) in gengduo.geju" :key="index">
+                                            {{ (index+2) +': '+ item}} 
+                                        </p>
                                     </div>
                                 </div>
                             </a-col>
@@ -229,6 +240,10 @@ export default defineComponent({
     },
     data() {
         return {
+            isShow: {
+                isShowXuanKong: false,
+                isShowZiBai: false,
+            },
             xuankongjiugong: [
                 {
                     zhuan: 1,
@@ -437,6 +452,10 @@ export default defineComponent({
                 },
             ],
             isSave: false,
+            gengduo: {
+                diyun: 0,
+                geju: [''],
+            }
         }
     },
     mounted() {
@@ -450,6 +469,8 @@ export default defineComponent({
         },
         // 下卦按钮逻辑
         xiagua() {
+            // 显示样式
+            this.isShow.isShowXuanKong = true
             // 保存记录
             this.xuankongRef.xiati = "下卦"
             // 处理运盘
@@ -529,9 +550,14 @@ export default defineComponent({
 
             // 换回排序
             this.xuankongjiugong = this.xuankongjiugong.sort(function (a: any, b: any) { return a.yuan - b.yuan })
+
+            // 更多信息
+            this.jibenxinxiFunc()
         },
         // 替卦按钮逻辑
         tigua() {
+            // 显示样式
+            this.isShow.isShowXuanKong = true
             // 保存记录
             this.xuankongRef.xiati = "替卦"
             // 处理运盘
@@ -629,9 +655,14 @@ export default defineComponent({
 
             // 换回排序
             this.xuankongjiugong = this.xuankongjiugong.sort(function (a: any, b: any) { return a.yuan - b.yuan })
+
+            // 更多信息
+            this.jibenxinxiFunc()
         },
         // 紫白飞星排法
         zibaifeixingPai() {
+            // 显示紫白
+            this.isShow.isShowZiBai = !this.isShow.isShowZiBai
             // 当前农历时间
             var lunar = Solar.fromYmdHms(this.modelRef.year, this.modelRef.month, this.modelRef.day, this.modelRef.hour, Number(this.modelRef.minute), Number(this.modelRef.second)).getLunar()
 
@@ -727,6 +758,81 @@ export default defineComponent({
                 // console.log('失败')
                 message.error(error)
             })
+        },
+        jibenxinxiFunc() {
+            // 计算地运时间
+            this.jibenxinxi_diyun()
+            // 计算格局全部信息
+            this.jibenxinxi_geju()
+        },
+        jibenxinxi_diyun() {
+            let diyun_zuoshan = this.xuankongRef.zuoshan.slice(0, 1)
+
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                if (this.xuankongjiugong[i].ershisishan.indexOf(diyun_zuoshan) != -1) {
+                    // 找到坐山信息
+                    // 计算地运
+                    if (this.xuankongjiugong[i].fei < 5) {
+                        this.gengduo.diyun = (5 - this.xuankongjiugong[i].fei) * 20
+                    } else {
+                        this.gengduo.diyun = (9 - this.xuankongjiugong[i].fei) * 20 + 100
+                    }
+                }
+            }
+        },
+        jibenxinxi_geju() {
+            let zuo = this.xuankongRef.zuoshan.slice(0, 1) 
+            let xiang = this.xuankongRef.zuoshan.slice(2, 3)
+
+            let zuoJiuGong, xiangJiuGong
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                // 找到坐山信息
+                if (this.xuankongjiugong[i].ershisishan.indexOf(zuo) != -1) {
+                    zuoJiuGong = this.xuankongjiugong[i]
+                    // console.log('zuo:' ,this.xuankongjiugong[i])
+                }
+                // 找到朝向信息
+                if (this.xuankongjiugong[i].ershisishan.indexOf(xiang) != -1) {
+                    xiangJiuGong = this.xuankongjiugong[i]
+                    //  console.log('xiang:' ,this.xuankongjiugong[i])
+                }
+            }
+            // 旺山旺相的处理
+            this.gengduo.geju = []  // 初始化
+            let jiuyunXiaBiao = this.xuankongjiuyun.indexOf(this.xuankongRef.jiuyun) + 1 + ''   // 处理九运的数字转换
+            // console.log('jiuyunXiaBiao:' ,jiuyunXiaBiao)
+            if (jiuyunXiaBiao == zuoJiuGong?.shanxing && jiuyunXiaBiao == xiangJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "旺山旺向局"]
+            } else if (jiuyunXiaBiao == zuoJiuGong?.shanxing && jiuyunXiaBiao == zuoJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "双星到坐，上山局"]
+            }else if (jiuyunXiaBiao == xiangJiuGong?.shanxing && jiuyunXiaBiao == xiangJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "双星到向，下水局"]
+            }
+
+            // 伏吟的处理
+            console.log('伏吟数据：', this.xuankongjiugong[0])
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                // 获取地运的number类型数据
+                let diyunN = this.ershisishanyinyang.n[this.ershisishanyinyang.num.indexOf(this.xuankongjiugong[i].yunpan)]
+                let pushStr = this.xuankongjiugong[i].name + ': '
+                // console.log(diyunN)
+                if (this.xuankongjiugong[i].shanxing == diyunN) {
+                    pushStr += '山星与运盘同，犯伏吟。'
+                } 
+                if (this.xuankongjiugong[i].xiangxing == diyunN) {
+                    pushStr += '向星与运盘同，犯伏吟。'
+                }
+                if (Number(this.xuankongjiugong[i].shanxing) == this.xuankongjiugong[i].fei) {
+                    pushStr += '山星与元旦盘同，犯伏吟。'
+                }
+                if (Number(this.xuankongjiugong[i].xiangxing) == this.xuankongjiugong[i].fei) {
+                    pushStr += '向星与元旦盘同，犯伏吟。'
+                }
+                
+
+                // 添加到数据
+                this.gengduo.geju = [...this.gengduo.geju, pushStr]
+            }
         }
     },
     // components: {
@@ -737,6 +843,8 @@ export default defineComponent({
 </script>
 <style lang="stylus" scoped>
 .xuankong
+    min-height 500px
+
     .home-row
         // 修改ant，button的margin
         .ant-col-xs-20
@@ -769,20 +877,7 @@ export default defineComponent({
                         border-radius 6px
                         padding 5px
                         margin-top 10px
-                        
-                        // .create-paipan
-                        //     background-color #f1f1f1
-                        //     border-radius 6px
-                        // .ant-btn:hover
-                        //     background-color: #cdcdcd
-                        //     color black
-                        //     border-color white
-                        // .ant-btn:focus
-                        //     color black
-                        //     border-color white
-                        // .home-form
-                        //     display flex
-                        
+
 
         .xuankong-jiugong
             background-color #f1f1f1
@@ -808,4 +903,10 @@ export default defineComponent({
                     p
                         display inline-block
                         vertical-align middle
+        .xuankong-jibenziliao
+            background-color #f1f1f1
+            border-radius 6px
+            padding 5px
+            margin 0 0 10px 0px
+            text-align left
 </style>

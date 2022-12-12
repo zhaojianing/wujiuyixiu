@@ -2,9 +2,8 @@
 import axios from 'axios'
 import GLOBALCONFIG from './globalConfig'
 
-const ConfigBaseURL = GLOBALCONFIG.GLOBAL.vue_http_api // ..
+const ConfigBaseURL = GLOBALCONFIG.GLOBAL.vue_http_api
 //使用create方法创建axios实例
-console.log('configBaseUrl:', ConfigBaseURL)
 const Axios = axios.create({
   timeout: 5000, // 请求超时时间
   baseURL: ConfigBaseURL,

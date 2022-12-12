@@ -3,7 +3,7 @@
     <a-row>
       <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
       <a-col :xs="20" :sm="16" :md="16" :lg="14" :xl="14">
-        <button @click="getJsonString">GetDataToJson</button>
+        <!-- <button @click="getJsonString">GetDataToJson</button> -->
         <div class="editor" v-if="editor">
           <menu-bar class="editor__header" :editor="editor" />
           <editor-content :editor="editor" />
@@ -40,7 +40,7 @@ export default defineComponent({
 
   setup() {
     const editor = useEditor({
-      content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
+      content: '<p>🎉</p><p>在测试呢~去看看别的</p><p>🎉</p>',
       extensions: [
         StarterKit,
         CustomBulletList,
@@ -58,5 +58,6 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
-
+.editor
+  min-height 500px
 </style>
