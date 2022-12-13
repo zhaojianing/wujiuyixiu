@@ -172,6 +172,7 @@ import { defineComponent, reactive } from "@vue/runtime-core";
 import { Form, message, notification } from 'ant-design-vue';
 import { Solar, Lunar, LunarMonth } from 'lunar-typescript';
 import qs from "qs";
+import { func } from "vue-types";
 // import { number } from "vue-types";
 // import MainHeader from '@/components/MainHeader.vue';
 // import MainCopyright from '@/components/MainCopyright.vue';
@@ -811,6 +812,7 @@ export default defineComponent({
 
             // 伏吟的处理
             console.log('伏吟数据：', this.xuankongjiugong[0])
+            let gejuData:Array<string> = []
             for (let i = 0; i < this.xuankongjiugong.length; i++) {
                 // 获取地运的number类型数据
                 let diyunN = this.ershisishanyinyang.n[this.ershisishanyinyang.num.indexOf(this.xuankongjiugong[i].yunpan)]
@@ -828,11 +830,77 @@ export default defineComponent({
                 if (Number(this.xuankongjiugong[i].xiangxing) == this.xuankongjiugong[i].fei) {
                     pushStr += '向星与元旦盘同，犯伏吟。'
                 }
-                
-
                 // 添加到数据
-                this.gengduo.geju = [...this.gengduo.geju, pushStr]
+                gejuData = [...gejuData, pushStr]
+                
+                // this.gengduo.geju = [...this.gengduo.geju, pushStr]
             }
+            console.log('未作处理的数据：',gejuData)
+            let unArr = this.unique(gejuData)
+            console.log('处理完的数据：',unArr)
+            this.gengduo.geju = [...this.gengduo.geju, ...unArr]
+            
+        },
+        // 去重
+        unique(arr:Array<string>):Array<string> {
+            if (arr.length < 9) {
+                return arr
+            }
+            let arrData:Array<string> = []
+            let [syfu, sydfu, xyfu, xydfu] = [0, 0, 0, 0]
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].indexOf('山星与运盘同，犯伏吟。') != -1) {
+                    syfu++
+                }
+                if (arr[i].indexOf('山星与元旦盘同，犯伏吟。') != -1) {
+                    sydfu++
+                }
+                if (arr[i].indexOf('向星与运盘同，犯伏吟。') != -1) {
+                    xyfu++
+                }
+                if (arr[i].indexOf('向星与元旦盘同，犯伏吟。') != -1) {
+                    xydfu++
+                }
+            }
+            console.log([arrData, syfu, sydfu, xyfu, xydfu])
+            if (syfu == 9) {
+                let clearArr = this.clearStr(arr, '山星与运盘同，犯伏吟。')
+                arrData = [...arrData, '全局山星与运盘同，犯伏吟。', ...clearArr]
+                console.log('arrData',arrData)
+            }
+            if (sydfu == 9) {
+                let clearArr = this.clearStr(arr, '山星与元旦盘同，犯伏吟')
+                arrData = [...arrData, '全局山星与元旦盘同，犯伏吟', ...clearArr]
+                console.log('arrData',arrData)
+            }
+            if (xyfu == 9) {
+                let clearArr = this.clearStr(arr, '向星与运盘同，犯伏吟。')
+                arrData = [...arrData, '全局向星与运盘同，犯伏吟。', ...clearArr]
+                console.log('arrData',arrData)
+            }
+            if (xydfu == 9) {
+                let clearArr = this.clearStr(arr, '向星与元旦盘同，犯伏吟。')
+                arrData = [...arrData, '全局向星与元旦盘同，犯伏吟。', ...clearArr]
+                console.log('arrData',arrData)
+            }
+
+            return arrData
+        },
+        clearStr(arr:Array<string>, str:string):Array<string> {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].indexOf(str) != -1) {
+                    let reg = new RegExp(str)
+                    arr[i] = arr[i].replace(reg, "")
+                }
+            }
+            // 清除没用的数据
+            for (let j = 0; j < arr.length; j++) {
+                if (arr[j].length == 4) {
+                    arr.splice(j,1);
+                    j = j - 1;
+                }
+            }
+            return arr
         }
     },
     // components: {

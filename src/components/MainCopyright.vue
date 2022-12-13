@@ -1,7 +1,7 @@
 <template>
     <footer class="wujiu-footer">
         <section>
-            <p>网站浏览：{{ totalPeople }}次,加载时间：{{ loadTime }}秒</p>
+            <p>网站浏览：{{ totalPeople }}次{{globalConfig.HISTORY == 'LOCAL' ? "(本地开发版本)":""}},加载时间：{{ loadTime }}秒</p>
             <p>Posted by: Ning <a href="https://beian.miit.gov.cn">豫ICP备2022018869号</a></p>
         </section>
     </footer>
@@ -9,10 +9,13 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import Axios from "./../until/axios";
+import globalConfig from "./../until/globalConfig";
 export default defineComponent({
     name: "MainCopyright",
     setup() {
-        return {}
+        return {
+            globalConfig
+        }
     },
     data() {
         return {
