@@ -148,12 +148,44 @@
                                 </div>
                                 <div class="xuankong-jibenziliao">
                                     <div class="jibenziliao">
-                                        <h3> <b> ( {{xuankongRef.zuoshan}} {{xuankongRef.xiati}}) 基础信息：</b></h3>
+                                        <h3> <b> ( {{ xuankongRef.zuoshan }} {{ xuankongRef.xiati }}) 基础信息：</b></h3>
                                         <hr>
-                                        <p>1: 地运{{ gengduo.diyun }} 年</p>
+                                        <p>1: 地运{{ gengduo.diyun }}年</p>
                                         <p v-for="(item, index) in gengduo.geju" :key="index">
-                                            {{ (index+2) +': '+ item}} 
+                                            {{ (index + 2) + ': ' + item }}
                                         </p>
+                                        <hr>
+                                        <h3> <b> 城门诀：</b></h3>
+                                        <!-- <p>{{chengmenjuedata.sanyuanlong}}</p> -->
+                                        <div class="xuankong-jiugong-chengmen">
+                                            <span>{{chengmenjuedata.leftchengmenStr}}</span>
+                                            <div class="gridBox">
+                                                <div class="cellLi"
+                                                    v-for="jiugong in chengmenjuedata.leftchengmenjuedata"
+                                                    :key="jiugong.left">
+                                                    <p>{{ jiugong.left }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="xuankong-jiugong-chengmen">
+                                            <span>{{chengmenjuedata.rightchengmenStr}}</span>
+                                            <div class="gridBox">
+                                                <div class="cellLi" v-for="jiugong in chengmenjuedata.rightchengmenjuedata"
+                                                    :key="jiugong.right">
+                                                    <p>{{ jiugong.right }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <hr>
+                                        <h3> <b> 七星打劫(在写，别着急)：</b></h3> -->
+                                        <hr>
+                                        <h3> <b> 九星组合吉凶：</b></h3>
+                                        <div v-for="jxzh in xuankongjiugong" :key="jxzh.yuan">
+                                            <p>{{ jxzh.name }} : ({{jxzh.shanxing}}{{jxzh.xiangxing}}组合){{ jxzh.jiuxingjixiong }}</p>
+                                            <hr>
+                                        </div>
+                                        <!-- <hr>
+                                        <h3> <b> 文献参考(在写，别着急)：</b></h3> -->
                                     </div>
                                 </div>
                             </a-col>
@@ -172,7 +204,7 @@ import { defineComponent, reactive } from "@vue/runtime-core";
 import { Form, message, notification } from 'ant-design-vue';
 import { Solar, Lunar, LunarMonth } from 'lunar-typescript';
 import qs from "qs";
-import { func } from "vue-types";
+import { func, number } from "vue-types";
 // import { number } from "vue-types";
 // import MainHeader from '@/components/MainHeader.vue';
 // import MainCopyright from '@/components/MainCopyright.vue';
@@ -254,7 +286,9 @@ export default defineComponent({
                     ershisishan: '辰巽巳',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '6',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 2,
                     fei: 9,
@@ -263,7 +297,9 @@ export default defineComponent({
                     ershisishan: '丙午丁',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '1',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 3,
                     fei: 2,
@@ -272,7 +308,9 @@ export default defineComponent({
                     ershisishan: '未坤申',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '8',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 8,
                     fei: 3,
@@ -281,7 +319,9 @@ export default defineComponent({
                     ershisishan: '甲卯乙',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '7',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 0,
                     fei: 5,
@@ -290,7 +330,9 @@ export default defineComponent({
                     ershisishan: '',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '55',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 4,
                     fei: 7,
@@ -299,7 +341,9 @@ export default defineComponent({
                     ershisishan: '庚酉辛',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '3',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 7,
                     fei: 8,
@@ -308,7 +352,9 @@ export default defineComponent({
                     ershisishan: '丑艮寅',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '2',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 6,
                     fei: 1,
@@ -317,7 +363,9 @@ export default defineComponent({
                     ershisishan: '壬子癸',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '9',
+                    jiuxingjixiong: '',
                 }, {
                     zhuan: 5,
                     fei: 6,
@@ -326,7 +374,9 @@ export default defineComponent({
                     ershisishan: '戌乾亥',
                     shanxing: '',
                     xiangxing: '',
-                    yunpan: ''
+                    yunpan: '',
+                    fanyin: '4',
+                    jiuxingjixiong: '',
                 },
             ],
             ershisishanyinyang: {
@@ -334,7 +384,8 @@ export default defineComponent({
                 yin: '子癸丑卯乙辰午丁未酉辛戌',
                 num: '一二三四五六七八九',
                 n: '123456789',
-                tixing: '壬二子一癸一丑七艮七寅九甲一卯二乙二辰六巽六巳六丙七午九丁九未二坤二申一庚九酉七辛七戌六乾六亥六'
+                tixing: '壬二子一癸一丑七艮七寅九甲一卯二乙二辰六巽六巳六丙七午九丁九未二坤二申一庚九酉七辛七戌六乾六亥六',
+                lianRuGuaNum: '12345678912'
             },
             xuankongjiuyun: ["一运", "二运", "三运", "四运", "五运", "六运", "七运", "八运", "九运",],
             xuankongRef: {
@@ -456,6 +507,211 @@ export default defineComponent({
             gengduo: {
                 diyun: 0,
                 geju: [''],
+            },
+            chengmenjuedata: {
+                sanyuanlong: '',
+                leftchengmenjuedata: [
+                    {
+                        zhuan: 1,
+                        fei: 4,
+                        yuan: 1,
+                        name: '巽宫',
+                        ershisishan: '辰巽巳',
+                        left: ''
+                    }, {
+                        zhuan: 2,
+                        fei: 9,
+                        yuan: 2,
+                        name: '离宫',
+                        ershisishan: '丙午丁',
+                        left: ''
+                    }, {
+                        zhuan: 3,
+                        fei: 2,
+                        yuan: 3,
+                        name: '坤宫',
+                        ershisishan: '未坤申',
+                        left: ''
+                    }, {
+                        zhuan: 8,
+                        fei: 3,
+                        yuan: 4,
+                        name: '震宫',
+                        ershisishan: '甲卯乙',
+                        left: ''
+                    }, {
+                        zhuan: 0,
+                        fei: 5,
+                        yuan: 5,
+                        name: '中宫',
+                        ershisishan: '',
+                        left: ''
+                    }, {
+                        zhuan: 4,
+                        fei: 7,
+                        yuan: 6,
+                        name: '兑宫',
+                        ershisishan: '庚酉辛',
+                        left: ''
+                    }, {
+                        zhuan: 7,
+                        fei: 8,
+                        yuan: 7,
+                        name: '艮宫',
+                        ershisishan: '丑艮寅',
+                        left: ''
+                    }, {
+                        zhuan: 6,
+                        fei: 1,
+                        yuan: 8,
+                        name: '坎宫',
+                        ershisishan: '壬子癸',
+                        left: ''
+                    }, {
+                        zhuan: 5,
+                        fei: 6,
+                        yuan: 9,
+                        name: '乾宫',
+                        ershisishan: '戌乾亥',
+                        left: ''
+                    },
+                ],
+                rightchengmenjuedata: [
+                    {
+                        zhuan: 1,
+                        fei: 4,
+                        yuan: 1,
+                        name: '巽宫',
+                        ershisishan: '辰巽巳',
+                        right: ''
+                    }, {
+                        zhuan: 2,
+                        fei: 9,
+                        yuan: 2,
+                        name: '离宫',
+                        ershisishan: '丙午丁',
+                        right: ''
+                    }, {
+                        zhuan: 3,
+                        fei: 2,
+                        yuan: 3,
+                        name: '坤宫',
+                        ershisishan: '未坤申',
+                        right: ''
+                    }, {
+                        zhuan: 8,
+                        fei: 3,
+                        yuan: 4,
+                        name: '震宫',
+                        ershisishan: '甲卯乙',
+                        right: ''
+                    }, {
+                        zhuan: 0,
+                        fei: 5,
+                        yuan: 5,
+                        name: '中宫',
+                        ershisishan: '',
+                        right: ''
+                    }, {
+                        zhuan: 4,
+                        fei: 7,
+                        yuan: 6,
+                        name: '兑宫',
+                        ershisishan: '庚酉辛',
+                        right: ''
+                    }, {
+                        zhuan: 7,
+                        fei: 8,
+                        yuan: 7,
+                        name: '艮宫',
+                        ershisishan: '丑艮寅',
+                        right: ''
+                    }, {
+                        zhuan: 6,
+                        fei: 1,
+                        yuan: 8,
+                        name: '坎宫',
+                        ershisishan: '壬子癸',
+                        right: ''
+                    }, {
+                        zhuan: 5,
+                        fei: 6,
+                        yuan: 9,
+                        name: '乾宫',
+                        ershisishan: '戌乾亥',
+                        right: ''
+                    },
+                ],
+                leftchengmenStr: '',
+                rightchengmenStr: '',
+            },
+            jiuxingzuhejixiongdata: {
+                jiuxingdata: {
+                    "11": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "22": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "33": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "44": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "55": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "66": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "77": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "88": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "99": "《玄空秘旨》云：“吉凶相并，螟蛉为嗣。”《挨星灵验经》云：“丁财双会，吉凶并临。”又云：“上山定破财，下水必损丁。”此组合旺财则难以旺丁，旺丁则难以旺财",
+                    "12": "《玄机赋》 云：“坎流坤位， 买臣常遭贱妇之羞。”《玄空秘旨》 云： “腹多水而膨胀。”《挨星灵验经》 云： “贪黑腹水， 妇人持家。”《挨星奇验经》 云： “二一交加大不良，中男灭绝不还乡 。”",
+                    "13": "《玄机赋》 云： “震与坎乍交。” 又云“木入坎宫， 凤池身贵。”",
+                    "14": "《玄机赋》 云： “木入坎宫， 凤池身贵。” 又云“名扬科甲， 贪狼在巽宫。”《紫白诀》 云： “四一同宫， 准发科甲之显。”《玄空秘旨》 云： “车驱北阙， 时闻丹诏频来。”《挨星奇验经》 云： “井助文风科甲。”",
+                    "15": "《飞星赋》 云： “子癸岁， 廉贞飞来， 阴处生疮。”(补加：泌尿系统，癌症)",
+                    "16": "《玄空秘旨》 云：“金水多情， 贪花恋酒。”《挨星奇验经》 云： “需利学习仕途。”(补加：文昌位不得位，就是官非，车祸)",
+                    "17": "《玄空秘旨》 云： “金水多情， 贪花恋酒。” 又云“鸡交鼠而倾泻， 必犯徒流。”(补加：外遇)",
+                    "18": "《挨星灵验经》 云：“一八相逢， 当运亦主损丁、 溺水、肾亏。” 一八交会主不祥， 小心高处被摔伤。(补加：摔伤)",
+                    "19": "《飞星赋》 云： “火暗而神志难清。”《玄空秘旨》 云：“南离北坎， 位极中央。” 又云“丙壬会子癸， 喜产多男；天市合丙坤， 富堪敌围。” 又云“鲜姻缘之作合， 寄物于南北人家。”(补加：不得位，就是不正当两性关系)",
+                    "23": "《飞星赋》 云： “复壁堪身。” 又云“豫拟食停。”《挨星灵验经》 云：“雷地防车灾， 家人脾胃难吉。 斗牛主官非，后代子女不孝。”《玄空秘旨》 云： “雷出地而相冲， 定遭桎梏。”(补加：对母亲不好，以下犯上)",
+                    "24": "《玄空秘旨》云：“风行地而硬直难当， 室有欺姑之妇。”《玄机赋》 云： “风行地上， 决定伤脾。”(补加：官非，以下犯上，车祸)",
+                    "25": "《飞星赋》 云：“黑黄兮酿疾堪伤。”《挨星灵验经》 云：“二五交加， 失令可断伤亡、 难孕、 流产。”《紫白诀》 云：“黄遇黑时出寡妇， 黑逢黄至出鳏夫。” 又云“二五交加，罹死亡或生疾病。”(补加：必损主，专死当家人，死绝，常年吃药，生女儿问题不大)",
+                    "26": "《飞星赋》 云： “交至乾坤， 吝心不足。” 又云“戌未僧尼， 自我有缘何益？ ” 又云“乾坤鬼神， 与他相克非祥。”(补加：不正当两性关系，淫荡)",
+                    "27": "《飞星赋》 云： “临云泄痢。” 肠胃有疾， 也主车祸、淫荡。(补加：27合化火，车祸，血光之灾，淫荡（2女性阴部，7为悦），火灾)",
+                    "28": "《玄机赋》 云： “巨入艮坤， 田连阡陌。” 吉时主富，凶时车祸、 脾胃肠等疾病。(补加：不得位，仍然以凶论)",
+                    "29": "《玄机赋》 云： “离位峻岩而损目。” 主眼疾、 淫荡。(补加：车祸，血光之灾)",
+                    "34": "《飞星赋》 云：“同来震巽， 昧事无常。”《挨星奇验经》云： “比和为打斗。” 主打架斗殴、 官非。(补加：淫荡，毫无生气入门，则粮难一宿，家中困难)",
+                    "35": "《玄空秘旨》 云：“我克彼而遭其辱， 因财帛而丧身。”主官非、 四肢不利或脑神经疾病。(补加：足病)",
+                    "36": "《飞星赋》 云：“壮途踬足。” 又云“头响兮六三。”《玄机赋》 云： “木见戌朝， 庄生难免鼓盆之叹。”(补加：撞腿，伤足)",
+                    "37": "《飞星赋》 云： “乙辛兮家室分离。”《玄空秘旨》 云：“长庚启明， 交战四国。” 又云“木金相反， 背义忘恩。”又云“男女多情， 无媒约则为私约。” 又云“兑位明堂破震，主吐血之灾。” 又云“甲庚会局， 文臣而兼武将之职。”《紫白诀》 云： “三七叠至， 被劫盗更见官灾。”(补加：穿心煞，最轻官灾)",
+                    "38": "《挨星奇验经》 云： “卯遇丑， 谨损小口。” 主官非、损人丁。(补加：38合化木，卯酉兮谨慎损小口，得位不损人丁)",
+                    "39": "《玄空秘旨》 云：“栋入南离， 骤厅堂再焕。”《玄机赋》云： “震阳生火， 雷奋而火尤明。”(补加：不得位，仍以凶论)",
+                    "45": "《飞星赋》 云： “乳痛兮四五。” 主股疾或乳病。(补加：股病，头脑神经病，妇人乳房疾病)",
+                    "46": "《飞星赋》 云： “小畜差役劳碌。”《挨星奇验经》 云：“跳楼自寻短见， 定是乾木应凶。”(补加：脑神经，失眠，官非，车祸)",
+                    "47": "《飞星赋》 云： “辰酉兮闺帏不睦。” 又云“风郁而气机不利。”(补加：以下犯上，口舌，官非，股伤)",
+                    "48": "《玄空秘旨》 云：“山风值而泉石膏盲。”《挨星灵验经》云： “文曲逢辅， 少女定然羞死。”《紫白诀》 云： “四绿固号文昌， 然八会而小口损伤。”(补加：姻缘煞，结石)",
+                    "49": "《玄机赋》 云： “巽阴就离， 风散则火易熄。”《挨星奇验经》： “四九合化为金， 须防淫乱是非。” 又云： “午见辰，当防股伤。”",
+                    "56": "《挨星奇验经》 云： “戊己到乾宫， 头多不吉。”(补加：头部疾病，足病)",
+                    "57": "《飞星赋》 云： “酉辛年， 戊己吊来， 喉间有疾。”(补加：口舌生疮，肺部有病)",
+                    "58": "《挨星奇验经》 云： “左辅遇廉贞， 腿上有病。”(补加：车灾，足)",
+                    "59": "《挨星灵验经》 云：“宅犯紫黄， 必有疾病、 服毒之厄运。”(补加：常年吃药)",
+                    "67": "《挨星灵验经》 云：“盘遇交剑， 定遭车祸、 官非之凶灾。” 又云“乾位为天门， 破军飞临防车祸。”(补加：被枪毙)",
+                    "68": "《玄机赋》 云： “金居艮位， 乌府求名。” 又云“若艮配纯阳， 鳏夫岂有发儿之兆？ ”《紫白诀》 云： “六八武科发趾， 八六谋士参军。”",
+                    "69": "《挨星灵验经》 云：“火烧天， 头部有病。”《玄空秘旨》云： “火烧天而张门相斗， 家生骂父之儿。”《飞星赋》 云：“同人车马驰驱。”《玄机赋》 云： “火烧天门， 必当吐血。”《紫白诀》 云： “九紫虽司喜气， 然六会九而长房血症。”(补加：官非，淫乱，车祸，不孝子嗣)",
+                    "78": "《玄机赋》 云：“泽山为咸， 少男之情属少女。”《挨星奇验经》 云： “少男少女， 无媒也能私定婚约。” 主外遇、婚外情。",
+                    "79": "《飞星赋》 云： “赤紫兮致灾有数。”《玄空秘旨》 云：“午酉逢而江源花酒。”《紫白诀》 云： “九七合辙， 常招回禄之灾。”(补加：常年吃药，手术，血光，车祸，私人，偷情)",
+                    "89": "《玄空秘旨》 云：“火见土而愚钝顽夫。”《玄机赋》 云：“辅临丙丁， 位列朝班。”",
+                    "137": "《飞星赋》 云： “壬甲排庚， 最异龙摧屋角。《紫白诀》 云： “三碧临庚， 逢一白而丁口频添， 交二黑则食相济济。””(补加：洪水冲屋，房屋倒塌，漏水)",
+                    "146": "《玄空秘旨》 云： “巽宫水路缠乾， 有悬梁之厄。”(补加：能说会道，上吊)",
+                    "166": "《玄空秘旨》 云： “虚联奎壁， 启八代之文章。”",
+                    "168": "《玄空秘旨》 云： “土制水复生金， 自主田庄之富。”",
+                    "169": "《玄空秘旨》 云： “壬丙朝乾， 贵客而有耋耄之寿。”(注：耋耄指长寿之意)",
+                    "178": "《玄空秘旨》 云： “胃入斗牛， 积千箱之玉帛。”",
+                    "248": "《飞星赋》 云： “寅申触巳， 曾闻虎咥家人”《玄空秘旨》 云： “山地风吹， 还生风疾。”(补加：可断（因）动物受伤)",
+                    "345": "《飞星赋》 云：“寒户遭瘟， 缘自三廉夹绿。” 又云“碧绿风魔， 他处廉贞莫见”",
+                    "369": "《玄空秘旨》 云： “火克金兼化木， 数惊回禄之灾。”主车祸。",
+                    "479": "《玄空秘旨》 云： “火克金兼化木， 数惊回禄之灾。”主车祸。",
+                    "579": "《飞星赋》 云：“青楼染疾， 只因七弼同黄。” 又云“紫黃毒药， 临宮兑口休尝。”(补加：家有人有病，性病)",
+                    "927": "《玄空秘旨》 云： “火曜连珠相值， 青云路上自消遙。”",
+                    "419": "《飞星赋》 云： 四荡一淫，淫荡者扶之归正",
+                    "667": "重乾取悦，老头强奸少女",
+                    "2479": "《飞星赋》 云： “当知四荡一淫， 淫荡者扶之归正。”《玄空秘旨》 云： “阴神满地成群， 红粉场中空快乐。”",
+                    "2689": "《紫白诀》 云： “二黑飞乾， 逢八白而财源大进， 遇九紫则瓜瓞绵绵。”",
+                    "372": "《紫白诀》 云： “三碧临庚， 逢一白而丁口频添， 交二黑则食相济济。”",
+                    "6728": "《玄空秘旨》 云： “富并陶朱， 断是坚金遇土。”",
+                    "1486": "山风值而泉石膏盲，结石疾病"
+                }
             }
         }
     },
@@ -495,8 +751,8 @@ export default defineComponent({
                     var zuoshanyunpan = this.xuankongjiugong[i].yunpan
                     // 拿到坐山三元龙
                     var sanYuanLongI = this.xuankongjiugong[i].ershisishan.indexOf(shan)
-                    shanxingI = this.ershisishanyinyang.num.indexOf(zuoshanyunpan)
                     // 拿到坐山原宫的三元龙
+                    shanxingI = this.ershisishanyinyang.num.indexOf(zuoshanyunpan)
                     var yuanSYL = zuoshanyunpan == "五" ? shan : this.xuankongjiugong[shanxingI].ershisishan[sanYuanLongI]
                     if (this.ershisishanyinyang.yang.indexOf(yuanSYL) != -1) {
                         shanxingStr = this.ershisishanyinyang.n.slice(shanxingI - 9) + this.ershisishanyinyang.n.slice(0, shanxingI)
@@ -760,11 +1016,17 @@ export default defineComponent({
                 message.error(error)
             })
         },
+        // 基础信息
         jibenxinxiFunc() {
             // 计算地运时间
             this.jibenxinxi_diyun()
             // 计算格局全部信息
             this.jibenxinxi_geju()
+            // 计算城门诀
+            this.chengMenJue()
+            // 计算七星打劫
+            // 计算九星组合吉凶
+            this.jiuxingjixiongFunc()
         },
         jibenxinxi_diyun() {
             let diyun_zuoshan = this.xuankongRef.zuoshan.slice(0, 1)
@@ -782,45 +1044,35 @@ export default defineComponent({
             }
         },
         jibenxinxi_geju() {
-            let zuo = this.xuankongRef.zuoshan.slice(0, 1) 
-            let xiang = this.xuankongRef.zuoshan.slice(2, 3)
-
             let zuoJiuGong, xiangJiuGong
+            let zuo = this.xuankongRef.zuoshan.slice(0, 1)
+            let xiang = this.xuankongRef.zuoshan.slice(2, 3)
+            let isHeShiShan = true
+            let isHeShiXiang = true
+            this.gengduo.geju = []  // 初始化
+            let gejuData: Array<string> = []
+            let isLianRuGua = true
             for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                // 获取地运的number类型数据
                 // 找到坐山信息
                 if (this.xuankongjiugong[i].ershisishan.indexOf(zuo) != -1) {
                     zuoJiuGong = this.xuankongjiugong[i]
-                    // console.log('zuo:' ,this.xuankongjiugong[i])
+
                 }
                 // 找到朝向信息
                 if (this.xuankongjiugong[i].ershisishan.indexOf(xiang) != -1) {
                     xiangJiuGong = this.xuankongjiugong[i]
-                    //  console.log('xiang:' ,this.xuankongjiugong[i])
-                }
-            }
-            // 旺山旺相的处理
-            this.gengduo.geju = []  // 初始化
-            let jiuyunXiaBiao = this.xuankongjiuyun.indexOf(this.xuankongRef.jiuyun) + 1 + ''   // 处理九运的数字转换
-            // console.log('jiuyunXiaBiao:' ,jiuyunXiaBiao)
-            if (jiuyunXiaBiao == zuoJiuGong?.shanxing && jiuyunXiaBiao == xiangJiuGong?.xiangxing) {
-                this.gengduo.geju = [...this.gengduo.geju, "旺山旺向局"]
-            } else if (jiuyunXiaBiao == zuoJiuGong?.shanxing && jiuyunXiaBiao == zuoJiuGong?.xiangxing) {
-                this.gengduo.geju = [...this.gengduo.geju, "双星到坐，上山局"]
-            }else if (jiuyunXiaBiao == xiangJiuGong?.shanxing && jiuyunXiaBiao == xiangJiuGong?.xiangxing) {
-                this.gengduo.geju = [...this.gengduo.geju, "双星到向，下水局"]
-            }
 
-            // 伏吟的处理
-            console.log('伏吟数据：', this.xuankongjiugong[0])
-            let gejuData:Array<string> = []
-            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                }
+
+
                 // 获取地运的number类型数据
                 let diyunN = this.ershisishanyinyang.n[this.ershisishanyinyang.num.indexOf(this.xuankongjiugong[i].yunpan)]
                 let pushStr = this.xuankongjiugong[i].name + ': '
-                // console.log(diyunN)
+                // 伏吟的处理
                 if (this.xuankongjiugong[i].shanxing == diyunN) {
                     pushStr += '山星与运盘同，犯伏吟。'
-                } 
+                }
                 if (this.xuankongjiugong[i].xiangxing == diyunN) {
                     pushStr += '向星与运盘同，犯伏吟。'
                 }
@@ -830,24 +1082,76 @@ export default defineComponent({
                 if (Number(this.xuankongjiugong[i].xiangxing) == this.xuankongjiugong[i].fei) {
                     pushStr += '向星与元旦盘同，犯伏吟。'
                 }
-                // 添加到数据
+
+                // 反吟的处理
+                if (this.xuankongjiugong[i].fanyin == this.xuankongjiugong[i].shanxing) {
+                    // 山星反吟
+                    pushStr += '山星犯反吟。'
+                }
+                if (this.xuankongjiugong[i].fanyin == this.xuankongjiugong[i].xiangxing) {
+                    // 向星反吟
+                    pushStr += '向星犯反吟。'
+                }
+
+                // 连茹卦处理
+                let isLianRuGuaStr = this.xuankongjiugong[i].shanxing + diyunN + this.xuankongjiugong[i].xiangxing
+                if (this.ershisishanyinyang.lianRuGuaNum.indexOf(isLianRuGuaStr) != -1 || this.ershisishanyinyang.lianRuGuaNum.indexOf(isLianRuGuaStr.split("").reverse().join("")) != -1) {
+                    // console.log(isLianRuGuaStr)
+                    // console.log('连茹卦记录')
+                } else {
+                    // console.log('连茹卦记录False')
+                    isLianRuGua = false
+                }
+
+                // 处理山向星合十
+                let shanN = Number(this.xuankongjiugong[i].shanxing) + Number(diyunN)
+                if (shanN != 10) {
+                    isHeShiShan = false
+                }
+                let xiangN = Number(this.xuankongjiugong[i].xiangxing) + Number(diyunN)
+                if (xiangN != 10) {
+                    isHeShiXiang = false
+                }
+
+                // 添加数据
                 gejuData = [...gejuData, pushStr]
-                
-                // this.gengduo.geju = [...this.gengduo.geju, pushStr]
             }
-            console.log('未作处理的数据：',gejuData)
+            // 玄空格局的处理
+            let jiuyunXiaBiao = this.xuankongjiuyun.indexOf(this.xuankongRef.jiuyun) + 1 + ''   // 处理九运的数字转换
+            if (jiuyunXiaBiao == zuoJiuGong?.shanxing && jiuyunXiaBiao == xiangJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "旺山旺向局"]
+            } else if (jiuyunXiaBiao == zuoJiuGong?.shanxing && jiuyunXiaBiao == zuoJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "双星到坐，上山局"]
+            } else if (jiuyunXiaBiao == xiangJiuGong?.shanxing && jiuyunXiaBiao == xiangJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "双星到向，下水局"]
+            } else if (jiuyunXiaBiao == xiangJiuGong?.shanxing && jiuyunXiaBiao == zuoJiuGong?.xiangxing) {
+                this.gengduo.geju = [...this.gengduo.geju, "上山下水局"]
+            }
+            // 连茹卦记录
+            if (isLianRuGua) {
+                this.gengduo.geju = [...this.gengduo.geju, '全局连茹卦']
+            }
+            // 全局山星合十
+            if (isHeShiShan) {
+                this.gengduo.geju = [...this.gengduo.geju, '全局山星合十']
+            }
+            // 全局向星合十
+            if (isHeShiXiang) {
+                this.gengduo.geju = [...this.gengduo.geju, '全局向星合十']
+            }
+            // console.log('未作处理的数据：', gejuData)
             let unArr = this.unique(gejuData)
-            console.log('处理完的数据：',unArr)
+            // console.log('处理完的数据：', unArr)
             this.gengduo.geju = [...this.gengduo.geju, ...unArr]
-            
+
         },
         // 去重
-        unique(arr:Array<string>):Array<string> {
-            if (arr.length < 9) {
+        unique(arr: Array<string>): Array<string> {
+            if (this.clearStr(arr, '').length < 9) {
                 return arr
             }
-            let arrData:Array<string> = []
-            let [syfu, sydfu, xyfu, xydfu] = [0, 0, 0, 0]
+            let arrData: Array<string> = []
+            let [syfu, sydfu, xyfu, xydfu, sfy, xfy] = [0, 0, 0, 0, 0, 0]
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].indexOf('山星与运盘同，犯伏吟。') != -1) {
                     syfu++
@@ -861,32 +1165,51 @@ export default defineComponent({
                 if (arr[i].indexOf('向星与元旦盘同，犯伏吟。') != -1) {
                     xydfu++
                 }
+                if (arr[i].indexOf('山星犯反吟。') != -1) {
+                    sfy++
+                }
+                if (arr[i].indexOf('向星犯反吟。') != -1) {
+                    xfy++
+                }
             }
-            console.log([arrData, syfu, sydfu, xyfu, xydfu])
+
             if (syfu == 9) {
                 let clearArr = this.clearStr(arr, '山星与运盘同，犯伏吟。')
                 arrData = [...arrData, '全局山星与运盘同，犯伏吟。', ...clearArr]
-                console.log('arrData',arrData)
+                // console.log('arrData', arrData)
             }
             if (sydfu == 9) {
                 let clearArr = this.clearStr(arr, '山星与元旦盘同，犯伏吟')
                 arrData = [...arrData, '全局山星与元旦盘同，犯伏吟', ...clearArr]
-                console.log('arrData',arrData)
+                // console.log('arrData', arrData)
             }
             if (xyfu == 9) {
                 let clearArr = this.clearStr(arr, '向星与运盘同，犯伏吟。')
                 arrData = [...arrData, '全局向星与运盘同，犯伏吟。', ...clearArr]
-                console.log('arrData',arrData)
+                // console.log('arrData', arrData)
             }
             if (xydfu == 9) {
                 let clearArr = this.clearStr(arr, '向星与元旦盘同，犯伏吟。')
                 arrData = [...arrData, '全局向星与元旦盘同，犯伏吟。', ...clearArr]
-                console.log('arrData',arrData)
+                // console.log('arrData', arrData)
             }
-
+            // 去除中宫
+            if (sfy == 8) {
+                let clearArr = this.clearStr(arr, '山星犯反吟。')
+                arrData = [...arrData, '全局山星犯反吟。', ...clearArr]
+                // console.log('arrData', arrData)
+            }
+            if (xfy == 8) {
+                let clearArr = this.clearStr(arr, '向星犯反吟。')
+                arrData = [...arrData, '全局向星犯反吟。', ...clearArr]
+                // console.log('arrData', arrData)
+            }
+            // arrData = [...arrData, ...this.clearStr(arr, '')]
+            // console.log([arrData, syfu, sydfu, xyfu, xydfu])
+            // console.log("arrData:", arrData)
             return arrData
         },
-        clearStr(arr:Array<string>, str:string):Array<string> {
+        clearStr(arr: Array<string>, str: string): Array<string> {
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].indexOf(str) != -1) {
                     let reg = new RegExp(str)
@@ -895,12 +1218,135 @@ export default defineComponent({
             }
             // 清除没用的数据
             for (let j = 0; j < arr.length; j++) {
-                if (arr[j].length == 4) {
-                    arr.splice(j,1);
+                if (arr[j].length == 4 || arr[j].length == 5) {
+                    arr.splice(j, 1);
                     j = j - 1;
                 }
             }
             return arr
+        },
+        chengMenJue() {
+            // 取到朝向的信息
+            let xiang = this.xuankongRef.zuoshan.slice(2, 3)
+            let xiangSanYuanLong = '地天人'
+            let xiangSanYuanLongIndex = 0 // 存储三元龙的索引下标
+            let xiangData
+            let leftNum, rightNum, leftStr, rightStr, leftI, rightI
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                // 找到朝向那一宫的信息
+                if (this.xuankongjiugong[i].ershisishan.indexOf(xiang) != -1) {
+                    xiangSanYuanLongIndex = this.xuankongjiugong[i].ershisishan.indexOf(xiang)
+                    xiangData = this.xuankongjiugong[i]
+                }
+            }
+            this.chengmenjuedata.sanyuanlong = xiangSanYuanLong[xiangSanYuanLongIndex] + '元龙'
+            // console.log('xiangSanYuanLongIndex', xiangSanYuanLongIndex)
+            // console.log('xiangData', xiangData)
+            // 拿到向首左右的宫位数字
+            leftNum = xiangData?.zhuan == 1 ? 8 : Number(xiangData?.zhuan) - 1
+            rightNum = xiangData?.zhuan == 8 ? 1 : Number(xiangData?.zhuan) + 1
+            // console.log('leftNum', leftNum)
+            // console.log('rightNum', rightNum)
+            // 处理顺序
+            this.chengmenjuedata.leftchengmenjuedata = this.chengmenjuedata.leftchengmenjuedata.sort(function (a: any, b: any) { return a.fei - b.fei })
+            let leftFive, rightFive
+            // 处理左边城门诀
+            this.chengmenjuedata.leftchengmenStr = ""
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                if (this.xuankongjiugong[i].zhuan == leftNum) {
+                    // 拿到运盘的Number类型
+                    let diyunNum = this.ershisishanyinyang.n[this.ershisishanyinyang.num.indexOf(this.xuankongjiugong[i].yunpan)]
+                    // console.log('左运盘地运数字：', diyunNum)
+                    leftFive = this.xuankongjiugong[i].ershisishan[xiangSanYuanLongIndex]
+                    this.chengmenjuedata.leftchengmenStr += this.xuankongjiugong[i].name + "("+ this.chengmenjuedata.sanyuanlong +")"
+                    for (let j = 0; j < this.xuankongjiugong.length; j++) {
+                        // 原飞盘 = 向首地运
+                        if (this.xuankongjiugong[j].fei == Number(diyunNum)) {
+                            let yuanErShiSiShan = this.xuankongjiugong[j].ershisishan == "" ? leftFive : this.xuankongjiugong[j].ershisishan[xiangSanYuanLongIndex]
+                            // 原飞盘二十四山阴阳
+                            if (this.ershisishanyinyang.yang.indexOf(yuanErShiSiShan) != -1) {
+                                // 顺飞
+                                this.chengmenjuedata.leftchengmenStr += ':城门不可用'
+                                leftStr = this.ershisishanyinyang.n.slice((Number(diyunNum) - 1) - 9) + this.ershisishanyinyang.n.slice(0, (Number(diyunNum) - 1))
+                                for (let x = 0; x < this.chengmenjuedata.leftchengmenjuedata.length; x++) {
+                                    let flagNum = 4 + x
+                                    flagNum >= 9 ? this.chengmenjuedata.leftchengmenjuedata[flagNum - 9].left = leftStr[x] : this.chengmenjuedata.leftchengmenjuedata[flagNum].left = leftStr[x]
+                                }
+                            } else {
+                                // 逆飞
+                                this.chengmenjuedata.leftchengmenStr += ':城门可用'
+                                let reverseN = this.ershisishanyinyang.n.split('').reverse().join("")  // ->  987654321
+                                leftI = reverseN.indexOf(diyunNum)
+                                leftStr = reverseN.slice(leftI - 9) + reverseN.slice(0, leftI)
+                                // console.log('leftStr',leftStr)
+                                for (let x = 0; x < this.xuankongjiugong.length; x++) {
+                                    // flagNum 是找到中宫，赋值
+                                    let flagNum = 4 + x
+                                    flagNum >= 9 ? this.chengmenjuedata.leftchengmenjuedata[flagNum - 9].left = leftStr[x] : this.chengmenjuedata.leftchengmenjuedata[flagNum].left = leftStr[x]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // 换回排序
+            this.chengmenjuedata.leftchengmenjuedata = this.chengmenjuedata.leftchengmenjuedata.sort(function (a: any, b: any) { return a.yuan - b.yuan })
+            // 处理顺序
+            this.chengmenjuedata.rightchengmenjuedata = this.chengmenjuedata.rightchengmenjuedata.sort(function (a: any, b: any) { return a.fei - b.fei })
+            this.chengmenjuedata.rightchengmenStr = ""
+            // 处理右边城门诀
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                if (this.xuankongjiugong[i].zhuan == rightNum) {
+                    // 拿到运盘的Number类型
+                    let diyunNum = this.ershisishanyinyang.n[this.ershisishanyinyang.num.indexOf(this.xuankongjiugong[i].yunpan)]
+                    // console.log('右运盘地运数字：', diyunNum)
+                    rightFive = this.xuankongjiugong[i].ershisishan[xiangSanYuanLongIndex]
+                    this.chengmenjuedata.rightchengmenStr += this.xuankongjiugong[i].name + "("+ this.chengmenjuedata.sanyuanlong +")"
+                    for (let j = 0; j < this.xuankongjiugong.length; j++) {
+                        // 原飞盘 = 向首地运
+                        if (this.xuankongjiugong[j].fei == Number(diyunNum)) {
+                            let yuanErShiSiShan = this.xuankongjiugong[j].ershisishan == "" ? rightFive : this.xuankongjiugong[j].ershisishan[xiangSanYuanLongIndex]
+                            // 原飞盘二十四山阴阳
+                            if (this.ershisishanyinyang.yang.indexOf(yuanErShiSiShan) != -1) {
+                                // 顺飞
+                                this.chengmenjuedata.rightchengmenStr += ':城门不可用'
+                                rightStr = this.ershisishanyinyang.n.slice((Number(diyunNum) - 1) - 9) + this.ershisishanyinyang.n.slice(0, (Number(diyunNum) - 1))
+                                for (let x = 0; x < this.chengmenjuedata.rightchengmenjuedata.length; x++) {
+                                    let flagNum = 4 + x
+                                    flagNum >= 9 ? this.chengmenjuedata.rightchengmenjuedata[flagNum - 9].right = rightStr[x] : this.chengmenjuedata.rightchengmenjuedata[flagNum].right = rightStr[x]
+                                }
+                            } else {
+                                // 逆飞
+                                this.chengmenjuedata.rightchengmenStr += ':城门可用'
+                                let reverseN = this.ershisishanyinyang.n.split('').reverse().join("")
+                                rightI = reverseN.indexOf(diyunNum)
+                                rightStr = reverseN.slice(rightI - 9) + reverseN.slice(0, rightI)
+                                // console.log('rightStr',rightStr)
+                                for (let x = 0; x < this.xuankongjiugong.length; x++) {
+                                    let flagNum = 4 + x
+                                    flagNum >= 9 ? this.chengmenjuedata.rightchengmenjuedata[flagNum - 9].right = rightStr[x] : this.chengmenjuedata.rightchengmenjuedata[flagNum].right = rightStr[x]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // 换回排序
+            this.chengmenjuedata.rightchengmenjuedata = this.chengmenjuedata.rightchengmenjuedata.sort(function (a: any, b: any) { return a.yuan - b.yuan })
+        },
+        jiuxingjixiongFunc() {
+            let shanN, xiangN, sortN
+            for (let i = 0; i < this.xuankongjiugong.length; i++) {
+                shanN = this.xuankongjiugong[i].shanxing
+                xiangN = this.xuankongjiugong[i].xiangxing
+                sortN = (shanN + xiangN).split('').sort().join('')
+                for (let item in this.jiuxingzuhejixiongdata.jiuxingdata) {
+                    if (sortN == item) {
+                        let obj = this.jiuxingzuhejixiongdata.jiuxingdata
+                        this.xuankongjiugong[i].jiuxingjixiong = obj[item as keyof typeof obj]
+                    }
+                }
+            }
         }
     },
     // components: {
@@ -962,6 +1408,31 @@ export default defineComponent({
                     
                     width calc(100% / 3)
                     padding 60px 0
+                    text-align center
+                    border 2px solid white
+                    box-sizing border-box
+                    background-color #f1f1f1
+                    overflow hidden
+                    // text-align left
+                    p
+                        display inline-block
+                        vertical-align middle
+        
+        .xuankong-jiugong-chengmen
+            display inline-block
+            background-color #f1f1f1
+            border-radius 6px
+            padding 5px
+            margin 0 0 10px 0px
+            width 49%
+            .gridBox
+                background-color #f5f5f5
+                overflow hidden
+                display flex
+                flex-wrap wrap
+                .cellLi
+                    width calc(100% / 3)
+                    // padding 60px 0
                     text-align center
                     border 2px solid white
                     box-sizing border-box

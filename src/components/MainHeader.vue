@@ -108,7 +108,7 @@ export default defineComponent({
                     toUrl: '/about',
                 },
                 {
-                    name: '给我留言',
+                    name: '留言墙板',
                     toUrl: '/geiwoliuyan',
                 }
             ],
