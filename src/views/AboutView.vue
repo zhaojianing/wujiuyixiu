@@ -6,8 +6,8 @@
 
     <div class="about">
       <a-row class="about-row">
-        <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
-        <a-col :xs="20" :sm="16" :md="16" :lg="14" :xl="14">
+        <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
+        <a-col :xs="20" :sm="20" :md="20" :lg="20" :xl="16">
           <div class="about-main">
             <div class="about-future">
               <h3>本站说明：</h3>
@@ -45,7 +45,7 @@
             </div>
           </div>
         </a-col>
-        <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
+        <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
       </a-row>
     </div>
     <!-- <MainCopyright /> -->

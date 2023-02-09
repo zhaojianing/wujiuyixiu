@@ -1,8 +1,8 @@
 <template>
     <div id="sign">
         <a-row class="sign-row">
-            <a-col :xs="0" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
-            <a-col :xs="24" :sm="16" :md="16" :lg="14" :xl="14">
+            <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
+            <a-col :xs="20" :sm="20" :md="20" :lg="20" :xl="16">
                 <div class="sign-container">
                     <h3>注册/登录</h3>
                     <a-form :model="formState" name="custom-validation" :label-col="{ span: 8 }"
@@ -27,7 +27,7 @@
                     <!-- <a-button type="primary" html-type="submit">回到主页</a-button> -->
                 </div>
             </a-col>
-            <a-col :xs="0" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
+            <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
         </a-row>
 
     </div>

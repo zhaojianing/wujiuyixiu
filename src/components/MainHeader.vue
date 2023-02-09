@@ -38,7 +38,7 @@
                                 </template>
 
                             </a-dropdown>
-                             <!-- &nbsp;&nbsp;<span style="color: white">|</span>&nbsp;&nbsp;
+                            <!-- &nbsp;&nbsp;<span style="color: white">|</span>&nbsp;&nbsp;
                             <a class="ant-dropdown-link" @click.prevent>
                                 <router-link to="/sign">存卦管理</router-link>
                             </a> -->
@@ -56,8 +56,8 @@
             </div>
         </div>
         <a-row class="channel-items-row">
-            <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
-            <a-col :xs="20" :sm="16" :md="16" :lg="14" :xl="14">
+            <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
+            <a-col :xs="20" :sm="20" :md="20" :lg="20" :xl="16">
                 <div class="channel-items-container">
                     <div class="channel-items">
                         <router-link :to="item.toUrl" v-for="item in channelList" :key="item.name"
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </a-col>
-            <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
+            <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
         </a-row>
     </div>
 </template>

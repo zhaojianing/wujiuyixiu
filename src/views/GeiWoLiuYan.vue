@@ -1,8 +1,8 @@
 <template>
     <div class="geiwoliuyan">
         <a-row class="maoshanuser-row">
-            <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
-            <a-col :xs="20" :sm="16" :md="16" :lg="14" :xl="14">
+            <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
+            <a-col :xs="20" :sm="20" :md="20" :lg="20" :xl="16">
                 <div class="geiwoliuyan-textarea">
                     <a-textarea v-model:value="textarea" placeholder="想对我说的话~" allow-clear show-count
                         :maxlength="240" />
@@ -18,10 +18,11 @@
                             <p>{{ item.introduction }}</p>
                         </div>
                     </div>
-                    <a-pagination v-model:current="current" :total="totalpage" show-less-items @change="getMessageData" />
+                    <a-pagination v-model:current="current" :total="totalpage" show-less-items
+                        @change="getMessageData" />
                 </div>
             </a-col>
-            <a-col :xs="2" :sm="4" :md="4" :lg="5" :xl="5"></a-col>
+            <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
         </a-row>
 
     </div>
@@ -108,7 +109,7 @@ export default defineComponent({
                 // message.success('留言成功')
             }).catch((error) => {
                 // console.log('失败')
-                message.error(error)
+                message.error("获取留言信息失败")
             })
         }
     }
