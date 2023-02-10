@@ -2078,6 +2078,7 @@ export default defineComponent({
                         background-color #f1f1f1
                         border-radius 6px
                         padding 5px
+                        text-align center
                         .create-paipan-bc-btn
                             text-align right
                             u
@@ -2093,6 +2094,7 @@ export default defineComponent({
                         border-radius 6px
                         padding 5px
                         margin-top 10px
+                        text-align center
                         .create-paipan
                             background-color #f1f1f1
                             border-radius 6px

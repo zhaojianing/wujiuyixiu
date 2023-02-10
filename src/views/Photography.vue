@@ -141,6 +141,7 @@ export default defineComponent({
 <style lang="stylus" scoped>
 .photography
     min-height 500px
+    text-align center
     .photography-row-div
         margin-bottom 10px
         // text-align left

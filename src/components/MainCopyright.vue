@@ -62,6 +62,7 @@ export default defineComponent({
     height: 100px
     background-color #f1f1f1
     padding 30px 0 30px 0
+    text-align center
     section
         p 
             font-weight bold

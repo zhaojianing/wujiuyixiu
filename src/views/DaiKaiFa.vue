@@ -41,6 +41,7 @@ export default defineComponent({
 <style lang="stylus" scoped>
 .daikaifa 
   .daikaifa-home-row 
+    text-align center
     .daikaifa-home-main 
       padding-top 200px
       min-height 500px

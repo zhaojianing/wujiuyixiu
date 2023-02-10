@@ -2,7 +2,9 @@
   <nav>
     <MainHeader />
   </nav>
-  <router-view />
+  <a-config-provider :locale="locale">
+    <router-view />
+  </a-config-provider>
   <MainCopyright />
   <div id="components-back-top-demo-custom">
     <a-back-top>
@@ -15,6 +17,15 @@
 import { defineComponent } from "@vue/runtime-core";
 import MainHeader from '@/components/MainHeader.vue';
 import MainCopyright from '@/components/MainCopyright.vue';
+
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+import zhCN from 'ant-design-vue/lib/locale/zh_CN'
+// import moment from 'moment';
+// import 'moment/locale/zh-cn';
+// moment.locale('zh-cn');
+dayjs.locale('zh-cn');
 
 export default defineComponent({
   name: "App",
@@ -45,7 +56,9 @@ export default defineComponent({
       'background:transparent'
     )
 
-    return {}
+    return {
+      locale: zhCN
+    }
   },
   components: {
     MainHeader,
@@ -59,8 +72,7 @@ export default defineComponent({
 #app
   font-family Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
+  // -moz-osx-font-smoothing grayscale
   color #2c3e50
   width 100%
   height 100%

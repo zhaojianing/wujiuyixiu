@@ -124,6 +124,7 @@ export default defineComponent({
         padding 5px
         margin-top 10px
         margin-bottom 10px
+        text-align center
         .geiwoliuyan-pagination-cards
             margin-bottom 10px
             background-color #fff
@@ -133,6 +134,7 @@ export default defineComponent({
         background-color #f1f1f1
         border-radius 6px
         padding 5px
+        text-align center
         .geiwoliuyan-btn
             margin 10px 0
 </style>

@@ -207,6 +207,7 @@ export default defineComponent({
             width 100%
             line-height 64px
             z-index 1000
+            text-align center
             ul,li 
                 display: flex;
                 align-items: center;
