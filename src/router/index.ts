@@ -37,42 +37,36 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/sign',
     name: 'sign',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Sign.vue')
+    component: () => import('../views/Sign.vue')
   },
   {
     path: '/maoshanuser',
     name: 'maoshanuser',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/MaoShanUser.vue')
+    component: () => import('../views/MaoShanUser.vue')
   },
   {
     path: '/geiwoliuyan',
     name: 'geiwoliuyan',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/GeiWoLiuYan.vue')
+    component: () => import('../views/GeiWoLiuYan.vue')
   },
   {
     path: '/photography',
     name: 'photography',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Photography.vue')
+    component: () => import('../views/Photography.vue')
   },
   {
     path: '/jieguajilu',
     name: 'jieguajilu',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Jieguajilu.vue')
+    component: () => import('../views/Jieguajilu.vue')
+  },
+  {
+    path: '/postarticle',
+    name: 'postarticle',
+    component: () => import('../views/PostArticle.vue')
+  },
+  {
+    path: '/article/:uid',
+    component: () => import('../views/ArticleUid.vue')
   },
 ]
 

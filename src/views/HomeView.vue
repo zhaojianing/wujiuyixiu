@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- <nav>
-      <MainHeader />
-    </nav> -->
+            <MainHeader />
+          </nav> -->
 
     <div class="home">
       <a-row class="home-row">
@@ -15,126 +15,59 @@
                 <div class="article-lists">
                   <a-carousel autoplay :dots="false" effect="fade" :style="{ marginTop: '0' }">
                     <div>
-                      <h4>公告：可以注册、保存奇门排盘啦~</h4>
+                      <h4>公告：可以发布自己的文章啦</h4>
                     </div>
                     <div>
                       <h4>祝你拥有美好的一天~</h4>
                     </div>
                   </a-carousel>
                   <div class="article-list">
-                    <div class="article-list-box">
-                      <h3>标题</h3>
-                      <hr>
-                      <div class="article-list-box-left">
-                        <img src="http://wujiuyixiu.cn/img/logo.f4d62925.png" alt="image">
-                      </div>
+                    <div class="article-list-box" v-for="item in articleRecommendation" :key="item.id">
+                      <router-link :to="`/article/`+item.article_uid">
+                        <h3>{{ item.article_title }}</h3>
+                        <hr>
+                        <div class="article-list-box-left">
+                          <img :src="item.article_cover" alt="image">
+                        </div>
+                      </router-link>
                       <div class="article-list-box-right">
-                        <p>
-                          hello world ! hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                        </p>
+                        <p>{{ item.article_container_text }}</p>
                       </div>
                       <hr>
                       <div class="article-list-box-bottom">
-                        <user-outlined /> 站长 &nbsp;<calendar-outlined /> 2023-1-11 &nbsp;<bar-chart-outlined /> 999
-                        &nbsp;<message-outlined /> 9
+                        <user-outlined /> {{ item.article_userid_name }} &nbsp;<calendar-outlined /> {{ new Date(Number(item.date)).toLocaleString()
+                        }}
+                        &nbsp;<bar-chart-outlined /> {{ item.watch_number }}
+                        &nbsp;<message-outlined /> {{ item.comment_number }}
                       </div>
                     </div>
-                    <div class="article-list-box">
-                      <h3>标题</h3>
-                      <hr>
-                      <div class="article-list-box-left">
-                        <img src="http://wujiuyixiu.cn/img/logo.f4d62925.png" alt="image">
-                      </div>
-                      <div class="article-list-box-right">
-                        <p>
-                          hello world ! hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                        </p>
-                      </div>
-                      <hr>
-                      <div class="article-list-box-bottom">
-                        <user-outlined /> 站长 <calendar-outlined /> 2023-1-11 <bar-chart-outlined /> 999
-                        <message-outlined />
-                        9
-                      </div>
-                    </div>
-                    <div class="article-list-box">
-                      <h3>标题</h3>
-                      <hr>
-                      <div class="article-list-box-left">
-                        <img src="http://wujiuyixiu.cn/img/logo.f4d62925.png" alt="image">
-                      </div>
-                      <div class="article-list-box-right">
-                        <p>
-                          hello world ! hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                          hello world ! hello world ! hello world ! hello world ! hello world ! hello world ! hello
-                          world !
-                          hello world ! hello world ! hello world !
-                        </p>
-                      </div>
-                      <hr>
-                      <div class="article-list-box-bottom">
-                        <user-outlined /> 站长 <calendar-outlined /> 2023-1-11 <bar-chart-outlined /> 999
-                        <message-outlined />
-                        9
-                      </div>
+                    <div class="article-list-pagination">
+                      <a-pagination v-model:current="current" :total="totalpage" show-less-items
+                        @change="getArticleRecommendation" />
                     </div>
                   </div>
                 </div>
               </a-col>
               <a-col :xs="0" :sm="8" :md="8" :lg="8" :xl="8">
-                <HomeMainRight/>
+                <HomeMainRight />
               </a-col>
             </a-row>
             <!-- <strong>无咎易修</strong> <br>
-            <strong>借易修行，以易养德</strong><br> -->
+                  <strong>借易修行，以易养德</strong><br> -->
           </div>
         </a-col>
         <a-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4"></a-col>
       </a-row>
     </div>
     <!-- <MainCopyright /> -->
-  </div>
+</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import HomeMainRight from '@/components/home/HomeMainRight.vue';
+import Axios from "@/until/axios";
+import { message } from "ant-design-vue";
 import {
   CalendarOutlined,
   BarChartOutlined,
@@ -145,7 +78,9 @@ import {
 
 export default defineComponent({
   setup() {
-    return {};
+    return {
+      current: ref(1),
+    };
   },
   components: {
     CalendarOutlined,
@@ -155,6 +90,45 @@ export default defineComponent({
     HomeMainRight
     // LikeOutlined
   },
+  data() {
+    return {
+      totalpage: 1,
+      articleRecommendation: [{
+        Comment: null,
+        article_collect: "0",
+        article_container_html: "<p><span style=\"color: rgb(53, 212, 199); font-size: 12px;\">文章可以发布啦</span></p>",
+        article_container_text: "文章可以发布啦",
+        article_cover: "http://wujiuyixiu.cn/img/logo.f4d62925.png",
+        article_password: "0",
+        article_title: "文章可以发布啦",
+        article_uid: "16765334058728",
+        article_userid: "b376bdac2c9ec5b68bff83de744bd17b",
+        classification: "茅山奇门",
+        comment_number: 0,
+        date: "1676533405",
+        id: 3,
+        is_encryption: "0",
+        like: 0,
+        watch_number: 0,
+        article_userid_name: "站长",
+      }]
+    }
+  },
+  mounted() {
+    this.getArticleRecommendation()
+  },
+  methods: {
+    getArticleRecommendation() {
+      Axios.get('/article_recommendation?pagination=' + this.current).then((response) => {
+        this.articleRecommendation = response.data
+        this.totalpage = response.status
+        // message.success('留言成功')
+      }).catch((error) => {
+        // console.log('失败')
+        message.error("获取首页文章失败")
+      })
+    }
+  }
 });
 
 </script>
@@ -183,6 +157,8 @@ export default defineComponent({
   // text-align left
   .article-list
     margin-top 10px
+    .article-list-pagination
+      text-align center
     .article-list-box
       width 100%
       margin-bottom 10px

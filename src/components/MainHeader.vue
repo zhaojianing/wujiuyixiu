@@ -91,7 +91,7 @@ export default defineComponent({
                     toUrl: '/xuankongpaipan',
                 },
                 {
-                    name: '生活随笔',
+                    name: '古书解析',
                     toUrl: '/daikaifa',
                 },
                 {
@@ -99,13 +99,13 @@ export default defineComponent({
                     toUrl: '/photography',
                 },
                 {
-                    name: '古书解析',
-                    toUrl: '/daikaifa',
+                    name: '关于本站',
+                    toUrl: '/about',
                 },
 
                 {
-                    name: '关于本站',
-                    toUrl: '/about',
+                    name: '发布文章',
+                    toUrl: '/postarticle',
                 },
                 {
                     name: '留言墙板',

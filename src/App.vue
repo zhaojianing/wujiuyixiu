@@ -98,5 +98,19 @@ export default defineComponent({
 .notification-custom-class {
   color: red;
 }
-
+// 添加最低高度 Editor-container
+.post-article-editor {
+    .w-e-text-container {
+        min-height 500px
+        .w-e-scroll {
+            min-height 500px
+            #w-e-textarea-1 {
+              min-height 500px
+            }
+        }
+    }
+}
+.article-list-box
+    a
+        color #ccc
 </style>
