@@ -57,17 +57,19 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .wujiu-footer
     width 100%
     height: 100px
-    background-color #f1f1f1
+    bg_color(bgColor_channel_a)
     padding 30px 0 30px 0
     text-align center
+    font_color(font_color_main_header_channel)
     section
         p 
             font-weight bold
             a
-                color #2c3e50
+                font_color(font_color_main_header_channel)
             a:hover
                 color blue
 </style>

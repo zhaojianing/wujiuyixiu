@@ -66,13 +66,18 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .about 
-  margin-bottom 10px
+  padding-bottom 10px
+  bg_color(background_color_main_header)
   .about-row 
+    h3 
+      font_color(font_color_main_header_channel)
     .about-main 
       // padding-top 200px
       min-height 500px
-      background-color #f1f1f1
+      bg_color(bgColor_channel_a)
+      font_color(font_color_main_header_channel)
       border-radius 6px
       padding 5px
       .about-future

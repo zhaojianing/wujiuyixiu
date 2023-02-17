@@ -116,10 +116,12 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .geiwoliuyan
     min-height 500px
+    bg_color(background_color_main_header)
     .geiwoliuyan-pagination
-        background-color #f1f1f1
+        bg_color(bgColor_channel_a)
         border-radius 6px
         padding 5px
         margin-top 10px
@@ -131,7 +133,7 @@ export default defineComponent({
             text-align left 
             padding 10px
     .geiwoliuyan-textarea
-        background-color #f1f1f1
+        bg_color(bgColor_channel_a)
         border-radius 6px
         padding 5px
         text-align center

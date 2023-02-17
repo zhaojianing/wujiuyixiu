@@ -363,18 +363,21 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .article-main-right
-    width 96%
+    width 100%
     float right
     margin-bottom 10px
-    background-color #fff
+    bg_color(bgColor_channel_a)
+    font_color(font_color_main_header_channel)
     border-radius 6px
     // padding 5px
     margin 0 0 10px 0px
     // box-shadow: 0px 0px 6px 2px #00000014
-    border 1px solid #dbdbdb
+    border 1px solid #cbd4ff
     .article-main-right-rili
-        background-color #ccc
+        bg_color(bgColor_channel_a)
+        font_color(font_color_main_header_channel)
         .article-main-right-xiangqing
             padding 10px
 </style>

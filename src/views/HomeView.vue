@@ -23,6 +23,7 @@
                   </a-carousel>
                   <div class="article-list">
                     <div class="article-list-box" v-for="item in articleRecommendation" :key="item.id">
+                      <div class="tag">{{ item.classification }}</div>
                       <router-link :to="`/article/`+item.article_uid">
                         <h3>{{ item.article_title }}</h3>
                         <hr>
@@ -134,7 +135,12 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
+.article-main-right
+    width 96%
 .home 
+  bg_color(background_color_main_header)
+  padding-bottom 10px
   .home-row 
     .home-main 
       min-height 450px
@@ -144,17 +150,19 @@ export default defineComponent({
   text-align: center;
   height: 40px;
   line-height: 30px;
-  background-color #f1f1f1
+  bg_color(bgColor_channel_a)
   border-radius 6px
   padding 5px
+  font_color(font_color_main_header)
 }
 
-.ant-carousel :deep(.slick-slide h3) {
-  color black
+.ant-carousel :deep(.slick-slide h4) {
+  font_color(font_color_main_header_channel)
 }
 .article-lists
   // margin 0 0 0 10px
   // text-align left
+  bg_color(background_color_main)
   .article-list
     margin-top 10px
     .article-list-pagination
@@ -162,16 +170,34 @@ export default defineComponent({
     .article-list-box
       width 100%
       margin-bottom 10px
-      background-color #fff
+      // background-color #fff
+      bg_color(bgColor_channel_a)
+      font_color(font_color_main_header_channel)
       border-radius 6px
       padding 5px
       margin 0 0 10px 0px
-      box-shadow: 0px 0px 6px 2px #00000014
+      box-shadow 0px 0px 6px 2px #00000014
+      overflow hidden
+      position relative
+      h3
+        font_color(font_color_main_header_channel)
+      .tag {
+          width 140px
+          height 25px
+          top 16px
+          right -40px
+          text-align center
+          line-height 25px
+          transform rotate(45deg)
+          position absolute
+          color #f1f1f1
+          background #7d8aeb
+      }
       .article-list-box-bottom
         line-height 20px
         max-height 60px
         text-align right
-        color #666666
+        font_color(font_color_main_header_channel)
       .article-list-box-phone-left
         width 100%
         vertical-align middle
@@ -202,7 +228,7 @@ export default defineComponent({
           line-height 20px
           max-height 120px
           overflow: hidden
-          color #666666
+          font_color(font_color_main_header_channel)
       .article-list-box-right
         width 60%
         display inline-block
@@ -219,5 +245,5 @@ export default defineComponent({
           line-height 20px
           max-height 120px
           overflow: hidden
-          color #666666
+          font_color(font_color_main_header_channel)
 </style>

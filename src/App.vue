@@ -69,6 +69,7 @@ export default defineComponent({
 </script>
 
 <style lang="stylus">
+@import "~@/until/mixin.styl";
 #app
   font-family Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
@@ -104,13 +105,28 @@ export default defineComponent({
         min-height 500px
         .w-e-scroll {
             min-height 500px
-            #w-e-textarea-1 {
+            div {
               min-height 500px
             }
         }
     }
 }
+.articleUidMainEditor
+    .w-e-text-container
+        .w-e-scroll
+            min-height 300px
+            bg_color(bgColor_article_uid)
 .article-list-box
     a
         color #ccc
+
+.maoshan-jiugong
+  .ant-tabs
+    font_color(font_color_main_header_channel)
+
+.photography
+  .ant-card-meta-title
+    font_color(font_color_main_header_channel)
+  .ant-card-meta-description
+    font_color(font_color_main_header_channel)
 </style>

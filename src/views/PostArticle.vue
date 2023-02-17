@@ -233,6 +233,7 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .components-input-demo-size .ant-input {
   margin 10px 8px 8px 10px
 }
@@ -242,10 +243,13 @@ export default defineComponent({
     font-weight bold
 }
 .post-article {
+    bg_color(background_color_main_header)
+    padding-bottom 10px
     .post-article-setting {
         padding 0 10px
         border 1px solid #ccc
         border-top none
+        bg_color(bgColor_channel_a)
     }
 }
 </style>

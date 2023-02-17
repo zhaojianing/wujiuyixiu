@@ -139,13 +139,19 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .photography
     min-height 500px
     text-align center
+    bg_color(background_color_main_header)
     .photography-row-div
         margin-bottom 10px
+        bg_color(background_color_main_header)
+        font_color(font_color_main_header_channel)
         // text-align left
         .photography-row-div-card
             min-width 300px
             padding-top 10px
+            bg_color(background_color_main_header)
+            font_color(font_color_main_header_channel)
 </style>

@@ -1356,9 +1356,10 @@ export default defineComponent({
 })
 </script>
 <style lang="stylus" scoped>
+@import "~@/until/mixin.styl";
 .xuankong
     min-height 500px
-
+    bg_color(background_color_main_header)
     .home-row
         // 修改ant，button的margin
         .ant-col-xs-20
@@ -1373,12 +1374,12 @@ export default defineComponent({
                 .home-col-form
                     margin: 0 0 10px 0
                     .xuankong-save
-                        background-color #f1f1f1
+                        bg_color(bgColor_channel_a)
                         border-radius 6px
                         padding 5px
                         margin-top 10px
                     .home-form-box
-                        background-color #f1f1f1
+                        bg_color(bgColor_channel_a)
                         border-radius 6px
                         padding 5px
                         .xk-save
@@ -1387,14 +1388,15 @@ export default defineComponent({
                                 padding-right 20px
                                 cursor pointer
                     .home-xinxi
-                        background-color #f1f1f1
+                        bg_color(bgColor_channel_a)
                         border-radius 6px
                         padding 5px
                         margin-top 10px
 
 
         .xuankong-jiugong
-            background-color #f1f1f1
+            bg_color(bgColor_channel_a)
+            font_color(font_color_main_header_channel)
             border-radius 6px
             padding 5px
             margin 0 0 10px 0px
@@ -1411,7 +1413,7 @@ export default defineComponent({
                     text-align center
                     border 2px solid white
                     box-sizing border-box
-                    background-color #f1f1f1
+                    bg_color(bgColor_channel_a)
                     overflow hidden
                     // text-align left
                     p
@@ -1420,7 +1422,7 @@ export default defineComponent({
         
         .xuankong-jiugong-chengmen
             display inline-block
-            background-color #f1f1f1
+            bg_color(bgColor_channel_a)
             border-radius 6px
             padding 5px
             margin 0 0 10px 0px
@@ -1436,16 +1438,19 @@ export default defineComponent({
                     text-align center
                     border 2px solid white
                     box-sizing border-box
-                    background-color #f1f1f1
+                    bg_color(bgColor_channel_a)
                     overflow hidden
                     // text-align left
                     p
                         display inline-block
                         vertical-align middle
         .xuankong-jibenziliao
-            background-color #f1f1f1
+            bg_color(bgColor_channel_a)
+            font_color(font_color_main_header_channel)
             border-radius 6px
             padding 5px
             margin 0 0 10px 0px
             text-align left
+            h3 
+                font_color(font_color_main_header_channel)
 </style>
